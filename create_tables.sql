@@ -169,11 +169,10 @@ original_affiliation text
 ;
 
 
-
-
+-- problems with field type, we default to text for testing 
 create table mag.papers
 (
-paper__id  bigint,
+paper_id  bigint,
 x_rank    bigint,
 doi        text, 
 doc_type       text,
@@ -183,9 +182,9 @@ book_title text,
 pub_year   text,
 pub_date   text,
 publisher  text,
-journal__id             text,
-conference_series__id   text,
-conference_instance__id text,
+journal_id             text,
+conference_series_id   text,
+conference_instance_id text,
 volume text, 
 issue  text,
 first_page text,
@@ -197,3 +196,6 @@ original_venue  text,
 created_date text
 )
 ;
+
+
+

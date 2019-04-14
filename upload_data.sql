@@ -65,19 +65,97 @@ original_affiliation text
 --
 */
 
--- mag.papers
 
-(1) “missing data for column "created_date"” 
---  backlash not properly escaped in record 140649167. I could fix this with
+
+-- mag.papers
+-- several errors mainly linked to titles 
+
+
+-- one solution could be to split the files in parts to localize and fix the problems
+-- https://linoxide.com/linux-how-to/split-large-text-file-smaller-files-linux/
+
+
+[1] unzip file 
+gunzip -k Papers.txt.gz
+
+[2] fix backlash escape 
 sed -e 's/\\/\\\\/g' Papers.txt > Papers_1.txt
 
-(2) “ extra data after last expected column” 
-was caused by encodings as it is due to a replacement sign in 
-one record “7733807: "2241562762 21644 10.18607/ES31772014�2473635951”
- I tried to force utf-8 but it did not work.
+[3] split file in chunks 
+-- split in 5 GB chunks 
+split -d -b 5G Papers_1.txt  xPapers
 
 
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers00  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers01  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers02  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers03  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers04  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers05  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers06  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers07  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers08  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers09  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers10  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers11  with delimiter E'\t' encoding 'UTF8' NULL AS '';
  
 
 
+
+----- OUTPUT 
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers00  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  extra data after last expected column
+CONTEXT:  COPY papers, line 7733807: "2241562762	21644	10.18607/ES31772014�2473635951	24753		Patent	controller for opening and closing m..."
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers01  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid byte sequence for encoding "UTF8": 0xb5
+CONTEXT:  COPY papers, line 1
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers02  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "ron in DAMA"
+CONTEXT:  COPY papers, line 1, column paper_id: "ron in DAMA"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers03  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "ion rationnelle en france"
+CONTEXT:  COPY papers, line 1, column paper_id: "ion rationnelle en france"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers04  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "reducing ammonia produced in animal"
+CONTEXT:  COPY papers, line 1, column paper_id: "reducing ammonia produced in animal"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers05  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "baguda por los derivados sulfamídicos"
+CONTEXT:  COPY papers, line 1, column paper_id: "baguda por los derivados sulfamídicos"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers06  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "aceutisch weekblad"
+CONTEXT:  COPY papers, line 1, column paper_id: "aceutisch weekblad"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers07  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "ebrae"
+CONTEXT:  COPY papers, line 1, column paper_id: "ebrae"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers08  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "mulacji w obrebie lessowej doliny uzytkowanej rolniczo"
+CONTEXT:  COPY papers, line 1, column paper_id: "mulacji w obrebie lessowej doliny uzytkowanej rolniczo"
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers09  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: "Journal"
+CONTEXT:  COPY papers, line 1, column paper_id: "Journal"
+
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers10  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  invalid input syntax for integer: " Publishing Group"
+CONTEXT:  COPY papers, line 1, column paper_id: " Publishing Group"
+
+
+\copy mag.papers  from /home/mike/Downloads/__MAG_DATASET/_frm_zenodo/xPapers11  with delimiter E'\t' encoding 'UTF8' NULL AS '';
+ERROR:  missing data for column "pub_year"
+CONTEXT:  COPY papers, line 1: "85	585	0	0	0	British Journal of General Practice	2016-06-24"
 
